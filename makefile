@@ -1,5 +1,5 @@
 CC := gcc
-CC_FLAGS := -lX11 -o t3vfm
+CC_FLAGS := -lX11 -o t3vwm
 
 SRC := $(wildcard src/*.c)
 
