@@ -7,14 +7,9 @@ extern int default_screen;
 int init()
 {
 	printf("starting T3Vwm\n");
-	printf("init...\n");
-	/*if(XInitThreads()!=0)
-	{
-		printf("NO MULTITHREADING\nerror\n");
-		return 1;
-	}*/
+	printf("init...");
 
-	display = XOpenDisplay(NULL);
+	display = XOpenDisplay(NULL); //use default display
 	if(display!=NULL)
 	{
 		printf("done\n");
@@ -26,6 +21,7 @@ int init()
 	}
 
 	default_screen=DefaultScreen(display);
+	printf("using screen %i\n", default_screen);
 
 	return T3V_okay;
 }

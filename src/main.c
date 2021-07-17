@@ -19,32 +19,48 @@ void main()
 		return;
 	}
 
+	Window w = XCreateSimpleWindow(
+		display, 
+		RootWindow(
+			display, 
+			default_screen),
+		100,100,
+		1366,768,
+		1, BlackPixel(display, default_screen),
+		WhitePixel(display, default_screen));
 
-	//test window
-	window=XCreateSimpleWindow(display, RootWindow(display, default_screen), 10, 10, 800, 800, 1, BlackPixel(display, default_screen), WhitePixel(display, default_screen));
-	XMapWindow(display, window);
-  	XSelectInput(display, window, ExposureMask | KeyPressMask);
-  	XFlush(display);
+	Window w2 = XCreateSimpleWindow(
+		display, 
+		w,
+		100,100,
+		1366,768,
+		1, BlackPixel(display, default_screen),
+		BlackPixel(display, default_screen));
+
+	XMapWindow(display,w);
+	int x_ret=XFillRectangle(display, w, DefaultGC(display, default_screen), 100, 100, 400, 400);
+	switch(x_ret)
+	{
+		case BadDrawable:
+			printf("TEST: BadDrawable\n");
+			break;
+		case BadGC:
+			printf("TEST: BadGC\n");
+			break;
+		case BadMatch:
+			printf("TEST: BadMatch\n");
+			break;
+		default:
+			printf("TEST: okay\n");
+			break;
+	}
+	XSelectInput(display, w, KeyPressMask);
 
   	//execute another program
-  		execlp("/usr/bin/feh", "feh", "-F", "/home/johannes/Pictures/tree.jpg", NULL);
+  		//execlp("/usr/bin/feh", "feh", "-F", "/home/johannes/Pictures/tree.jpg", NULL);
 	//wait
-	for(int i=0; i<3; i++)
+	for(int i=0; i<2; i++)
 	{
-		if(event.type==Expose)
-		{
-			XMapWindow(display, window);
-			XDrawString(
-				display,
-				window,
-				XDefaultGC(
-					display,
-					default_screen),
-				50,
-				50,
-				msg,
-				strlen(msg));
-		}
 		if(event.type==KeyPress)
 		{
 			break;
