@@ -1,8 +1,5 @@
 #include "t3vwm.h"
 
-#include <unistd.h>
-#include <string.h>
-
 extern Display *display;
 extern int default_screen;
 
@@ -22,15 +19,7 @@ void main()
 		return;
 	}
 
-	Window w = XCreateSimpleWindow(
-		display, 
-		RootWindow(
-			display, 
-			default_screen),
-		100,100,
-		1366,768,
-		1, BlackPixel(display, default_screen),
-		WhitePixel(display, default_screen));
+	spawn("/usr/bin/feh -F /home/johannes/Pictures/tree.jpg");
 
 	Window w2 = XCreateWindow
 	(
@@ -66,7 +55,6 @@ void main()
 	XSelectInput(display, w2, KeyPressMask);
 
   	//execute another program
-  		//execlp("/usr/bin/feh", "feh", "-F", "/home/johannes/Pictures/tree.jpg", NULL);
 	//wait
 	while(1)//for(int i=0; i<2; i++)
 	{
