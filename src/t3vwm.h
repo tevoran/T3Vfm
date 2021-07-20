@@ -5,6 +5,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define T3V_true 1
+
+
 #define T3V_okay 0
 
 int init();

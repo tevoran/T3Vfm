@@ -6,6 +6,9 @@
 extern Display *display;
 extern int default_screen;
 
+extern XSetWindowAttributes attr;
+extern unsigned long value_mask;
+
 void main()
 {
 	//initialization of X
@@ -29,16 +32,22 @@ void main()
 		1, BlackPixel(display, default_screen),
 		WhitePixel(display, default_screen));
 
-	Window w2 = XCreateSimpleWindow(
-		display, 
-		w,
-		100,100,
-		1366,768,
-		1, BlackPixel(display, default_screen),
-		BlackPixel(display, default_screen));
+	Window w2 = XCreateWindow
+	(
+		display,
+		RootWindow(display, default_screen),
+		100, 100,
+		1366, 768,
+		0,
+		CopyFromParent,
+		InputOutput,
+		CopyFromParent,
+		value_mask,
+		&attr
+	);
 
-	XMapWindow(display,w);
-	int x_ret=XFillRectangle(display, w, DefaultGC(display, default_screen), 100, 100, 400, 400);
+	XMapWindow(display,w2);
+	int x_ret=XFillRectangle(display, w2, DefaultGC(display, default_screen), 100, 100, 400, 400);
 	switch(x_ret)
 	{
 		case BadDrawable:
@@ -54,12 +63,12 @@ void main()
 			printf("TEST: okay\n");
 			break;
 	}
-	XSelectInput(display, w, KeyPressMask);
+	XSelectInput(display, w2, KeyPressMask);
 
   	//execute another program
   		//execlp("/usr/bin/feh", "feh", "-F", "/home/johannes/Pictures/tree.jpg", NULL);
 	//wait
-	for(int i=0; i<2; i++)
+	while(1)//for(int i=0; i<2; i++)
 	{
 		if(event.type==KeyPress)
 		{
